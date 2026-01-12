@@ -1,16 +1,13 @@
 export default class Todo {
-    constructor(title, description) {
-        this.title = title;
+    constructor(description) {
         this.description = description;
     }
 
-    setTitle(title) {
-        this.title = title;
+    setDescription(description) {
+        this.title = description;
     }
 
-    getTitle() {
-        return this.title;
-    }
-
-    
+    getDescription() {
+        return this.description;
+    }    
 }

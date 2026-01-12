@@ -1,18 +1,15 @@
 import Project from "./models/project.js";
+import { bindProjectEvents } from "./dom/projectEvent.js";
+import { renderProject } from "./dom/projectList.js";
 
-let p1 = new Project("project 1");
-let userInput = document.getElementById("userinput");
-let enterButton = document.getElementById("enter");
+let projects = [];
 
+function handleCreateProject(name) {
+    const project = new Project(name);
+    projects.push(project);
+    renderProject(project);
+}
 
-
-userInput.addEventListener("keypress", (e) => {
-	if (userInput.value.length > 0 && e.keyCode === 13) {
-        console.log("test");
-	}
-})
-
-enterButton.addEventListener("click", (e) => {
-    console.log(e);
-})
-
+bindProjectEvents({
+    onCreate: handleCreateProject
+});
