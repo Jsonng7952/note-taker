@@ -1,5 +1,5 @@
-export function renderProject(project) {
-    const projectList = document.getElementById("projectlist");
+export function addProject(project) {
+    const projectList = document.getElementById("project-list");
     const li = document.createElement("li");
     li.textContent = project.getName();
     
@@ -11,5 +11,12 @@ export function renderProject(project) {
     li.appendChild(editButton);
     li.appendChild(deleteButton);
 
+    li.dataset.projectId = project.getId();
+
     projectList.appendChild(li);
+}
+
+export function deleteProject(id) {
+    const projectItem = document.querySelector(`[data-project-id="${id}"]`);
+    projectItem.remove();
 }

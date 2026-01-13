@@ -1,12 +1,18 @@
-let userInput = document.getElementById("userinput");
-let enterButton = document.getElementById("enter");
+export function bindProjectEvents({ onCreate, onDelete }) {
+    
+    const userInput = document.getElementById("userinput");
+    const enterButton = document.getElementById("enter");
+    const projectList = document.getElementById("project-list");
 
-export function bindProjectEvents({ onCreate }) {
     function handleCreate() {
         if (!userInput.value) return;
 
         onCreate(userInput.value);
         userInput.value = "";
+    }
+
+    function handleDelete(Id) {
+        onDelete(Id);
     }
 
     userInput.addEventListener("keypress", (e) => {
@@ -17,5 +23,9 @@ export function bindProjectEvents({ onCreate }) {
 
     enterButton.addEventListener("click", handleCreate);
 
-    
+    projectList.addEventListener("click", (e) => {
+        if(e.target.textContent === "Delete"){
+            handleDelete(e.target.parentNode.dataset.projectId);
+        }
+    });
 }

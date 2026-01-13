@@ -1,5 +1,6 @@
 export default class Project {
     constructor(name) {
+        this.id = crypto.randomUUID();
         this.name = name;
     }
 
@@ -9,5 +10,9 @@ export default class Project {
 
     getName() {
         return this.name;
+    }
+
+    getId() {
+        return this.id;
     }
 }
