@@ -1,6 +1,6 @@
 import Project from "./models/Project.js";
 import { bindProjectEvents } from "./dom/projectEvent.js";
-import { addProject, deleteProject } from "./dom/projectList.js";
+import { addProject, deleteProject, editProject, saveProject } from "./dom/projectList.js";
 
 let projects = [];
 
@@ -15,7 +15,20 @@ function handleDeleteProject(id) {
     deleteProject(id);
 }
 
+function handleEditProject(id) {
+    editProject(id);
+}
+
+function handleSaveProject(id, newName) {
+    const foundProject = projects.find(project => project.id === id);
+    foundProject.setName(newName);
+
+    saveProject(id);
+}
+
 bindProjectEvents({
     onCreate: handleCreateProject,
-    onDelete: handleDeleteProject
+    onDelete: handleDeleteProject,
+    onEdit: handleEditProject,
+    onSave: handleSaveProject
 });

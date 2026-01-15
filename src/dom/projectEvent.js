@@ -1,4 +1,4 @@
-export function bindProjectEvents({ onCreate, onDelete }) {
+export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave }) {
     
     const userInput = document.getElementById("userinput");
     const enterButton = document.getElementById("enter");
@@ -11,8 +11,16 @@ export function bindProjectEvents({ onCreate, onDelete }) {
         userInput.value = "";
     }
 
-    function handleDelete(Id) {
-        onDelete(Id);
+    function handleDelete(id) {
+        onDelete(id);
+    }
+
+    function handleEdit(id) {
+        onEdit(id);
+    }
+
+    function handleSave(id, newName) {
+        onSave(id, newName);
     }
 
     userInput.addEventListener("keypress", (e) => {
@@ -22,10 +30,16 @@ export function bindProjectEvents({ onCreate, onDelete }) {
     });
 
     enterButton.addEventListener("click", handleCreate);
-
+    
     projectList.addEventListener("click", (e) => {
-        if(e.target.textContent === "Delete"){
+        if(e.target.matches(("[data-action='delete']"))) {
             handleDelete(e.target.parentNode.dataset.projectId);
+        }
+        if (e.target.matches(("[data-action='edit']"))) {                 
+            handleEdit(e.target.parentNode.dataset.projectId);
+        }
+        if(e.target.matches(("[data-action='save']"))) {
+            handleSave(e.target.parentNode.dataset.projectId, e.target.parentNode.querySelector("input").value);
         }
     });
 }

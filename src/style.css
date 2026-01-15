@@ -1,0 +1,29 @@
+body {
+    background-color: #121212
+}
+
+* {
+    color: #E0E0E0;
+}
+
+button {
+    background-color: #444444;
+}
+
+input {
+    background-color: #444444;
+}
+
+.hide {
+    display: none;
+}
+
+/* 
+
+Background: #121212 (charcoal black)
+Primary Text: #E0E0E0 (light gray)
+Secondary Text: #B0B0B0 (medium gray)
+Borders/Dividers: #444444 (dark gray)
+Accent: #888888 (soft gray)
+
+*/
