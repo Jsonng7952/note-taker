@@ -1,10 +1,10 @@
-export default class Todo {
+export default class Task {
     constructor(description) {
         this.description = description;
     }
 
     setDescription(description) {
-        this.title = description;
+        this.description = description;
     }
 
     getDescription() {

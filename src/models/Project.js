@@ -1,7 +1,8 @@
 export default class Project {
     constructor(name) {
-        this.id = crypto.randomUUID();
         this.name = name;
+        this.id = crypto.randomUUID();
+        this.tasks = [];
     }
 
     setName(name) {
@@ -14,5 +15,9 @@ export default class Project {
 
     getId() {
         return this.id;
+    }
+
+    addTask(task) {
+        this.tasks.push(task);
     }
 }

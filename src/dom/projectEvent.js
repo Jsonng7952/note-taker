@@ -1,4 +1,4 @@
-export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave }) {
+export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTask, onAddTask }) {
     
     const userInput = document.getElementById("userinput");
     const enterButton = document.getElementById("enter");
@@ -23,6 +23,20 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave }) {
         onSave(id, newName);
     }
 
+    function handleNewTask(id) {
+        onNewTask(id);
+    }
+
+    function handleAddTask(id) {
+        const projectItem = document.querySelector(`[data-project-id="${id}"]`); 
+        const taskInput = projectItem.querySelector("ul").querySelector("input");
+
+        if(!taskInput.value) return;
+
+        onAddTask(id, taskInput.value);
+        taskInput.value = "";
+    }
+
     userInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
             handleCreate();
@@ -41,5 +55,11 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave }) {
         if(e.target.matches(("[data-action='save']"))) {
             handleSave(e.target.parentNode.dataset.projectId, e.target.parentNode.querySelector("input").value);
         }
+        if(e.target.matches(("[data-action='new-task']"))) {
+            handleNewTask(e.target.parentNode.dataset.projectId);
+        }        
+        if(e.target.matches(("[data-action='add-task']"))) {
+            handleAddTask(e.target.parentNode.parentNode.dataset.projectId);
+        }        
     });
 }
