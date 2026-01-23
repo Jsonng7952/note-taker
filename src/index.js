@@ -1,7 +1,7 @@
 import Project from "./models/Project.js";
 import Task from "./models/Task.js";
 import { bindProjectEvents } from "./dom/projectEvent.js";
-import { addProject, deleteProject, editProject, saveProject, showNewTask, addTaskToProject } from "./dom/projectList.js";
+import { addProject, deleteProject, editProject, saveProject, showNewTask, addTaskToProject, deleteTask, editTask, saveTask } from "./dom/projectList.js";
 
 let projects = [];
 
@@ -35,9 +35,26 @@ function handleAddTask(id, description) {
     const foundProject = projects.find(project => project.id === id);
     foundProject.addTask(task);
 
-    console.log(projects);
+    addTaskToProject(id, description, task);
+}
 
-    addTaskToProject(id, description);
+function handleDeleteTask(projectId, taskId) {
+    const foundProject = projects.find(project => project.id === projectId);
+    foundProject.deleteTask(taskId);
+
+    deleteTask(projectId, taskId);
+}
+
+function handleEditTask(projectId, taskId) {
+    editTask(projectId, taskId);
+}
+
+function handleSaveTask(projectId, taskId, newDesc) {
+    const foundProject = projects.find(project => project.id === projectId);
+    const foundTask = foundProject.tasks.find(task => task.getId() === taskId);
+    foundTask.setDescription(newDesc);
+
+    saveTask(projectId, taskId, newDesc);
 }
 
 bindProjectEvents({
@@ -46,5 +63,8 @@ bindProjectEvents({
     onEdit: handleEditProject,
     onSave: handleSaveProject,
     onNewTask: handleNewTask,
-    onAddTask: handleAddTask
+    onAddTask: handleAddTask,
+    onDeleteTask: handleDeleteTask,
+    onEditTask: handleEditTask,
+    onSaveTask: handleSaveTask
 });

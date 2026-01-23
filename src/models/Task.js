@@ -1,6 +1,7 @@
 export default class Task {
     constructor(description) {
         this.description = description;
+        this.id = crypto.randomUUID();
     }
 
     setDescription(description) {
@@ -9,5 +10,9 @@ export default class Task {
 
     getDescription() {
         return this.description;
+    }    
+   
+    getId() {
+        return this.id;
     }    
 }

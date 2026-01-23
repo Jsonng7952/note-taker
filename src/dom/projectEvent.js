@@ -1,4 +1,4 @@
-export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTask, onAddTask }) {
+export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTask, onAddTask, onDeleteTask, onEditTask, onSaveTask }) {
     
     const userInput = document.getElementById("userinput");
     const enterButton = document.getElementById("enter");
@@ -29,12 +29,24 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
 
     function handleAddTask(id) {
         const projectItem = document.querySelector(`[data-project-id="${id}"]`); 
-        const taskInput = projectItem.querySelector("ul").querySelector("input");
+        const taskInput = projectItem.querySelector("[data-action='input-task']");
 
         if(!taskInput.value) return;
 
         onAddTask(id, taskInput.value);
         taskInput.value = "";
+    }
+
+    function handleDeleteTask(projectId, taskId) {
+        onDeleteTask(projectId, taskId);
+    }
+
+    function handleEditTask(projectId, taskId) {
+        onEditTask(projectId, taskId);
+    }
+
+    function handleSaveTask(projectId, taskId, newDesc) {
+        onSaveTask(projectId, taskId, newDesc);
     }
 
     userInput.addEventListener("keypress", (e) => {
@@ -46,20 +58,38 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
     enterButton.addEventListener("click", handleCreate);
     
     projectList.addEventListener("click", (e) => {
+
+        const project = e.target.closest("[data-project-id]");
+        const projectId = project?.dataset.projectId;
+        const task = e.target.closest("[data-task-id]");
+        const taskId = task?.dataset.taskId;
+
+        const projectInput = project?.querySelector("input")?.value;
+        const taskInput = task?.querySelector("input")?.value;
+        
         if(e.target.matches(("[data-action='delete']"))) {
-            handleDelete(e.target.parentNode.dataset.projectId);
+            handleDelete(projectId);
         }
         if (e.target.matches(("[data-action='edit']"))) {                 
-            handleEdit(e.target.parentNode.dataset.projectId);
+            handleEdit(projectId);
         }
         if(e.target.matches(("[data-action='save']"))) {
-            handleSave(e.target.parentNode.dataset.projectId, e.target.parentNode.querySelector("input").value);
+            handleSave(projectId, projectInput);
         }
         if(e.target.matches(("[data-action='new-task']"))) {
-            handleNewTask(e.target.parentNode.dataset.projectId);
+            handleNewTask(projectId);
         }        
         if(e.target.matches(("[data-action='add-task']"))) {
-            handleAddTask(e.target.parentNode.parentNode.dataset.projectId);
+            handleAddTask(projectId);
+        }        
+        if(e.target.matches(("[data-action='delete-task']"))) {
+            handleDeleteTask(projectId, taskId);
+        }
+        if (e.target.matches(("[data-action='edit-task']"))) {                 
+            handleEditTask(projectId, taskId);
+        }
+        if(e.target.matches(("[data-action='save-task']"))) {
+            handleSaveTask(projectId, taskId, taskInput);
         }        
     });
 }
