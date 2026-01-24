@@ -11,31 +11,31 @@ function handleCreateProject(name) {
     addProject(project);
 }
 
-function handleDeleteProject(id) {
-    projects = projects.filter(project => project.getId() !== id);
-    deleteProject(id);
+function handleDeleteProject(projectId) {
+    projects = projects.filter(project => project.getId() !== projectId);
+    deleteProject(projectId);
 }
 
-function handleEditProject(id) {
-    editProject(id);
+function handleEditProject(projectId) {
+    editProject(projectId);
 }
 
-function handleSaveProject(id, newName) {
-    const foundProject = projects.find(project => project.id === id);
+function handleSaveProject(projectId, newName) {
+    const foundProject = projects.find(project => project.id === projectId);
     foundProject.setName(newName);
-    saveProject(id);
+    saveProject(projectId);
 }
 
-function handleNewTask(id) {
-    showNewTask(id);
+function handleNewTask(projectId) {
+    showNewTask(projectId);
 }
 
-function handleAddTask(id, description) {
+function handleAddTask(projectId, description) {
     const task = new Task(description);
-    const foundProject = projects.find(project => project.id === id);
+    const foundProject = projects.find(project => project.id === projectId);
     foundProject.addTask(task);
 
-    addTaskToProject(id, description, task);
+    addTaskToProject(projectId, description, task);
 }
 
 function handleDeleteTask(projectId, taskId) {

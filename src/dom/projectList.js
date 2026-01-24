@@ -54,45 +54,45 @@ export function addProject(project) {
     projectList.appendChild(li);
 }
 
-export function deleteProject(id) {
-    const projectItem = document.querySelector(`[data-project-id="${id}"]`);
+export function deleteProject(projectId) {
+    const project = document.querySelector(`[data-project-id="${projectId}"]`);
 
-    projectItem.remove();
+    project.remove();
 }
 
-export function editProject(id) {
-    const projectItem = document.querySelector(`[data-project-id="${id}"]`);    
+export function editProject(projectId) {
+    const project = document.querySelector(`[data-project-id="${projectId}"]`);    
 
-    projectItem.querySelector("input").value = projectItem.querySelector("span").textContent;
-    projectItem.querySelector("span").classList.add("hide");
-    projectItem.querySelector("input").classList.remove("hide");
-    projectItem.querySelector("[data-action='save']").classList.remove("hide");
-    projectItem.querySelector("[data-action='edit']").classList.add("hide");
+    project.querySelector("input").value = project.querySelector("span").textContent;
+    project.querySelector("span").classList.add("hide");
+    project.querySelector("input").classList.remove("hide");
+    project.querySelector("[data-action='save']").classList.remove("hide");
+    project.querySelector("[data-action='edit']").classList.add("hide");
 }
 
-export function saveProject(id) {
-    const projectItem = document.querySelector(`[data-project-id="${id}"]`); 
-    const newName = projectItem.querySelector("input").value;
+export function saveProject(projectId) {
+    const project = document.querySelector(`[data-project-id="${projectId}"]`); 
+    const newName = project.querySelector("input").value;
 
-    projectItem.querySelector("span").textContent = newName;    
-    projectItem.querySelector("span").classList.remove("hide");
-    projectItem.querySelector("input").classList.add("hide");
-    projectItem.querySelector("[data-action='save']").classList.add("hide");
-    projectItem.querySelector("[data-action='edit']").classList.remove("hide"); 
+    project.querySelector("span").textContent = newName;    
+    project.querySelector("span").classList.remove("hide");
+    project.querySelector("input").classList.add("hide");
+    project.querySelector("[data-action='save']").classList.add("hide");
+    project.querySelector("[data-action='edit']").classList.remove("hide"); 
 
 }
 
-export function showNewTask(id) {
-    const projectItem = document.querySelector(`[data-project-id="${id}"]`); 
-    const taskInput = projectItem.querySelector("[data-action='input-task']");
+export function showNewTask(projectId) {
+    const project = document.querySelector(`[data-project-id="${projectId}"]`); 
+    const taskInput = project.querySelector("[data-action='input-task']");
 
     taskInput.classList.remove("hide");
-    projectItem.querySelector("[data-action='add-task']").classList.remove("hide"); 
+    project.querySelector("[data-action='add-task']").classList.remove("hide"); 
 }
 
-export function addTaskToProject(id, description, task) {
-    const projectItem = document.querySelector(`[data-project-id="${id}"]`); 
-    const taskInput = projectItem.querySelector("[data-action='input-task']");
+export function addTaskToProject(projectId, description, task) {
+    const project = document.querySelector(`[data-project-id="${projectId}"]`); 
+    const taskInput = project.querySelector("[data-action='input-task']");
 
     const li = document.createElement("li");
     const span = document.createElement("span");
@@ -127,7 +127,7 @@ export function addTaskToProject(id, description, task) {
     taskInput.before(li);
 
     taskInput.classList.add("hide");
-    projectItem.querySelector("[data-action='add-task']").classList.add("hide"); 
+    project.querySelector("[data-action='add-task']").classList.add("hide"); 
 }
 
 export function deleteTask(projectId, taskId) {

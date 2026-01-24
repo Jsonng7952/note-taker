@@ -11,29 +11,29 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
         userInput.value = "";
     }
 
-    function handleDelete(id) {
-        onDelete(id);
+    function handleDelete(projectId) {
+        onDelete(projectId);
     }
 
-    function handleEdit(id) {
-        onEdit(id);
+    function handleEdit(projectId) {
+        onEdit(projectId);
     }
 
-    function handleSave(id, newName) {
-        onSave(id, newName);
+    function handleSave(projectId, newName) {
+        onSave(projectId, newName);
     }
 
-    function handleNewTask(id) {
-        onNewTask(id);
+    function handleNewTask(projectId) {
+        onNewTask(projectId);
     }
 
-    function handleAddTask(id) {
-        const projectItem = document.querySelector(`[data-project-id="${id}"]`); 
+    function handleAddTask(projectId) {
+        const projectItem = document.querySelector(`[data-project-id="${projectId}"]`); 
         const taskInput = projectItem.querySelector("[data-action='input-task']");
 
         if(!taskInput.value) return;
 
-        onAddTask(id, taskInput.value);
+        onAddTask(projectId, taskInput.value);
         taskInput.value = "";
     }
 
@@ -58,6 +58,8 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
     enterButton.addEventListener("click", handleCreate);
     
     projectList.addEventListener("click", (e) => {
+        const action = e.target.dataset.action;
+        if (!action) return;
 
         const project = e.target.closest("[data-project-id]");
         const projectId = project?.dataset.projectId;
@@ -67,29 +69,21 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
         const projectInput = project?.querySelector("input")?.value;
         const taskInput = task?.querySelector("input")?.value;
         
-        if(e.target.matches(("[data-action='delete']"))) {
-            handleDelete(projectId);
-        }
-        if (e.target.matches(("[data-action='edit']"))) {                 
-            handleEdit(projectId);
-        }
-        if(e.target.matches(("[data-action='save']"))) {
-            handleSave(projectId, projectInput);
-        }
-        if(e.target.matches(("[data-action='new-task']"))) {
-            handleNewTask(projectId);
-        }        
-        if(e.target.matches(("[data-action='add-task']"))) {
-            handleAddTask(projectId);
-        }        
-        if(e.target.matches(("[data-action='delete-task']"))) {
-            handleDeleteTask(projectId, taskId);
-        }
-        if (e.target.matches(("[data-action='edit-task']"))) {                 
-            handleEditTask(projectId, taskId);
-        }
-        if(e.target.matches(("[data-action='save-task']"))) {
-            handleSaveTask(projectId, taskId, taskInput);
-        }        
+        const handler = actionMap[action];
+        if (handler) handler({projectId, taskId, projectInput, taskInput});
     });
+
+    const actionMap = {
+        // ----- Project actions -----
+        "delete": ({projectId}) => handleDelete(projectId),
+        "edit": ({projectId}) => handleEdit(projectId),
+        "save": ({projectId, projectInput}) => handleSave(projectId, projectInput),
+        "new-task": ({projectId}) => handleNewTask(projectId),
+        "add-task": ({projectId}) => handleAddTask(projectId),
+
+        // ----- Task actions -----
+        "delete-task": ({projectId, taskId}) => handleDeleteTask(projectId, taskId),
+        "edit-task": ({projectId, taskId}) => handleEditTask(projectId, taskId),
+        "save-task": ({projectId, taskId, taskInput}) => handleSaveTask(projectId, taskId, taskInput)
+    };
 }
