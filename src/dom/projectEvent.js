@@ -1,4 +1,8 @@
-export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTask, onAddTask, onDeleteTask, onEditTask, onSaveTask }) {
+export function bindProjectEvents({ 
+    onCreate, onDelete, onEdit, onSave, 
+    onNewTask, onAddTask, 
+    onDeleteTask, onEditTask, onSaveTask,
+    onToggleTask }) {
     
     const userInput = document.getElementById("userinput");
     const enterButton = document.getElementById("enter");
@@ -29,7 +33,7 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
 
     function handleAddTask(projectId) {
         const projectItem = document.querySelector(`[data-project-id="${projectId}"]`); 
-        const taskInput = projectItem.querySelector("[data-action='input-task']");
+        const taskInput = projectItem.querySelector("[data-role='task-input']");
 
         if(!taskInput.value) return;
 
@@ -47,6 +51,10 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
 
     function handleSaveTask(projectId, taskId, newDesc) {
         onSaveTask(projectId, taskId, newDesc);
+    }
+
+    function toggleTask(projectId, taskId, checked) {
+        onToggleTask(projectId, taskId, checked);
     }
 
     userInput.addEventListener("keypress", (e) => {
@@ -67,7 +75,7 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
         const taskId = task?.dataset.taskId;
 
         const projectInput = project?.querySelector("input")?.value;
-        const taskInput = task?.querySelector("input")?.value;
+        const taskInput = task?.querySelector("[data-role='task-editinput']")?.value;
         
         const handler = actionMap[action];
         if (handler) handler({projectId, taskId, projectInput, taskInput});
@@ -86,4 +94,21 @@ export function bindProjectEvents({ onCreate, onDelete, onEdit, onSave, onNewTas
         "edit-task": ({projectId, taskId}) => handleEditTask(projectId, taskId),
         "save-task": ({projectId, taskId, taskInput}) => handleSaveTask(projectId, taskId, taskInput)
     };
+    
+    projectList.addEventListener("change", (e) => {
+        if (!e.target.matches("[data-role='task-complete']")) return;
+
+        const project = e.target.closest("[data-project-id]");
+        const projectId = project?.dataset.projectId;
+        const task = e.target.closest("[data-task-id]");
+        const taskId = task?.dataset.taskId;
+
+        console.log(e.target.checked);
+
+        toggleTask(
+            projectId,
+            taskId,
+            e.target.checked
+        );
+    });
 }

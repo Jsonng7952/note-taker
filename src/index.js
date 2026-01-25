@@ -1,7 +1,7 @@
 import Project from "./models/Project.js";
 import Task from "./models/Task.js";
 import { bindProjectEvents } from "./dom/projectEvent.js";
-import { addProject, deleteProject, editProject, saveProject, showNewTask, addTaskToProject, deleteTask, editTask, saveTask } from "./dom/projectList.js";
+import { addProject, deleteProject, editProject, saveProject, showNewTask, addTaskToProject, deleteTask, editTask, saveTask, toggleTask } from "./dom/projectList.js";
 
 let projects = [];
 
@@ -31,9 +31,11 @@ function handleNewTask(projectId) {
 }
 
 function handleAddTask(projectId, description) {
-    const task = new Task(description);
     const foundProject = projects.find(project => project.id === projectId);
+    const task = new Task(description);
     foundProject.addTask(task);
+
+    console.log(foundProject);
 
     addTaskToProject(projectId, description, task);
 }
@@ -54,7 +56,20 @@ function handleSaveTask(projectId, taskId, newDesc) {
     const foundTask = foundProject.tasks.find(task => task.getId() === taskId);
     foundTask.setDescription(newDesc);
 
+    console.log(foundProject);
+
     saveTask(projectId, taskId, newDesc);
+}
+
+function handleToggleTask(projectId, taskId, checked) {
+    const foundProject = projects.find(project => project.id === projectId);
+    const foundTask = foundProject.tasks.find(task => task.getId() === taskId);
+
+    foundTask.setCompleted(checked);
+
+    console.log(foundProject);
+
+    toggleTask(projectId, taskId);
 }
 
 bindProjectEvents({
@@ -66,5 +81,6 @@ bindProjectEvents({
     onAddTask: handleAddTask,
     onDeleteTask: handleDeleteTask,
     onEditTask: handleEditTask,
-    onSaveTask: handleSaveTask
+    onSaveTask: handleSaveTask,
+    onToggleTask: handleToggleTask
 });

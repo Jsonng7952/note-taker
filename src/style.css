@@ -7,23 +7,44 @@ body {
     color: #E0E0E0;
 }
 
-li {
+#project-list {
+    margin: 1em;
+}
 
+ul {
+    list-style-type: none; 
+    padding-left: 0;       
+    margin: 0;             
+}
+
+[data-task-id] {
+    padding-left: 1em;
 }
 
 span {
     border-radius: 10%;
     padding: 5px;
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.1em;
+    font-weight: 500;
 }
 
 span:hover {
     background-color: #444444;
 }
 
+.project-name {
+    font-size: 2.5em;
+    font-weight: 500;
+}
+
 .hide {
     display: none;
+}
+
+.completed {
+    text-decoration: line-through;
+    text-decoration-color: rgb(77, 198, 255);
+    text-decoration-thickness: 0.1em;
 }
 
 /* 
@@ -46,7 +67,7 @@ button {
     color: #B0B0B0;
     cursor: pointer;
     display: inline-block;
-    font-size: 16px;
+    font-size: 1em;
     font-weight: 600;
     line-height: normal;
     margin: 5px;
@@ -81,7 +102,6 @@ button:active {
 
 input {
   max-width: 190px;
-  height: 30px;
   border: 2px solid transparent;
   outline: none;
   border-bottom: 2px solid #3f3f3f;
@@ -102,4 +122,8 @@ input:focus {
 
 input:focus::placeholder {
   color: #888888;
+}
+
+.task-checkbox {
+    height: auto;
 }

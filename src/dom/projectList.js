@@ -5,10 +5,12 @@ export function addProject(project) {
     li.dataset.projectId = project.getId();
 
     const span = document.createElement("span");
+    span.classList.add("project-name")
     span.textContent = project.getName();
 
     const input = document.createElement("input");
     input.type = "text";
+    input.dataset.role = "project-input";
     input.classList.add("hide");
 
     const editButton = document.createElement("button");
@@ -25,13 +27,13 @@ export function addProject(project) {
     saveButton.classList.add("hide");
 
     const newTaskButton = document.createElement("button");
-    newTaskButton.textContent = "+";
+    newTaskButton.textContent = "+ New Task";
     newTaskButton.dataset.action = "new-task";
 
     const taskList = document.createElement("ul");
     const taskInput = document.createElement("input");
     taskInput.type = "text";
-    taskInput.dataset.action = "input-task";
+    taskInput.dataset.role = "task-input";
     taskInput.classList.add("hide");
 
     const enterTaskButton = document.createElement("button");
@@ -84,7 +86,7 @@ export function saveProject(projectId) {
 
 export function showNewTask(projectId) {
     const project = document.querySelector(`[data-project-id="${projectId}"]`); 
-    const taskInput = project.querySelector("[data-action='input-task']");
+    const taskInput = project.querySelector("[data-role='task-input']");
 
     taskInput.classList.remove("hide");
     project.querySelector("[data-action='add-task']").classList.remove("hide"); 
@@ -92,7 +94,7 @@ export function showNewTask(projectId) {
 
 export function addTaskToProject(projectId, description, task) {
     const project = document.querySelector(`[data-project-id="${projectId}"]`); 
-    const taskInput = project.querySelector("[data-action='input-task']");
+    const taskInput = project.querySelector("[data-role='task-input']");
 
     const li = document.createElement("li");
     const span = document.createElement("span");
@@ -102,7 +104,7 @@ export function addTaskToProject(projectId, description, task) {
 
     const input = document.createElement("input");
     input.type = "text";
-    input.dataset.action = "input-edittask";
+    input.dataset.role = "task-editinput";
     input.classList.add("hide");
 
     const editButton = document.createElement("button");
@@ -118,6 +120,12 @@ export function addTaskToProject(projectId, description, task) {
     saveButton.dataset.action = "save-task";
     saveButton.classList.add("hide");
     
+    const taskCheckBox = document.createElement("input");
+    taskCheckBox.type = "checkbox";
+    taskCheckBox.dataset.role = "task-complete";
+    taskCheckBox.classList.add("task-checkbox")
+
+    li.appendChild(taskCheckBox);
     li.appendChild(span);
     li.appendChild(input);
     li.appendChild(editButton);
@@ -141,9 +149,9 @@ export function editTask(projectId, taskId) {
     const project = document.querySelector(`[data-project-id="${projectId}"]`);    
     const task = project.querySelector(`[data-task-id="${taskId}"]`);
 
-    task.querySelector("input").value = task.querySelector("span").textContent;
+    task.querySelector("[data-role='task-editinput']").value = task.querySelector("span").textContent;
     task.querySelector("span").classList.add("hide");
-    task.querySelector("input").classList.remove("hide");
+    task.querySelector("[data-role='task-editinput']").classList.remove("hide");
     task.querySelector("[data-action='save-task']").classList.remove("hide");
     task.querySelector("[data-action='edit-task']").classList.add("hide");
 }
@@ -154,7 +162,14 @@ export function saveTask(projectId, taskId, newDesc) {
 
     task.querySelector("span").textContent = newDesc;    
     task.querySelector("span").classList.remove("hide");
-    task.querySelector("input").classList.add("hide");
+    task.querySelector("[data-role='task-editinput']").classList.add("hide");
     task.querySelector("[data-action='save-task']").classList.add("hide");
     task.querySelector("[data-action='edit-task']").classList.remove("hide"); 
+}
+
+export function toggleTask(projectId, taskId) {
+    const project = document.querySelector(`[data-project-id="${projectId}"]`);    
+    const task = project.querySelector(`[data-task-id="${taskId}"]`);
+
+    task.querySelector("span").classList.toggle("completed");
 }
