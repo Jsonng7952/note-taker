@@ -7,10 +7,6 @@ body {
     color: #E0E0E0;
 }
 
-#project-list {
-    margin: 1em;
-}
-
 ul {
     list-style-type: none; 
     padding-left: 0;       
@@ -19,6 +15,12 @@ ul {
 
 [data-task-id] {
     padding-left: 1em;
+    margin: 10px;
+}
+
+[data-task-id]:hover {
+    background-color: #444444;
+    border-radius: 5px;
 }
 
 span {
@@ -28,13 +30,9 @@ span {
     font-weight: 500;
 }
 
-span:hover {
-    background-color: #444444;
-}
-
 .project-name {
-    font-size: 2.5em;
-    font-weight: 500;
+    font-size: 2em;
+    font-weight: 700;
 }
 
 .hide {
@@ -101,29 +99,31 @@ button:active {
 
 
 input {
-  max-width: 190px;
-  border: 2px solid transparent;
-  outline: none;
-  border-bottom: 2px solid #3f3f3f;
-  caret-color: #3f3f3f;
-  background-color: #212121;
-  padding: 5px;
-  transition: .5s linear;
-  font-family: monospace;
-  letter-spacing: 1px;
+    max-width: 190px;
+    border: 2px solid transparent;
+    outline: none;
+    border-bottom: 2px solid #3f3f3f;
+    caret-color: #3f3f3f;
+    background-color: #212121;
+    padding: 5px;
+    transition: .5s linear;
+    font-family: monospace;
+    letter-spacing: 1px;
 }
 
 input:focus {
-  border: 2px solid #888888;
-  caret-color: #888888;
-  color: #888888;
-  box-shadow: 4px 4px 10px #070707;
-}
+    border: 2px solid #888888;
+    caret-color: #888888;
+    color: #888888;
+    box-shadow: 4px 4px 10px #070707;
+    }
 
 input:focus::placeholder {
-  color: #888888;
+    color: #888888;
 }
 
 .task-checkbox {
     height: auto;
+    
 }
+
