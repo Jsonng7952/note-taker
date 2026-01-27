@@ -3,8 +3,8 @@ export default class Task {
         this.description = description;
         this.id = crypto.randomUUID();
         this.completed = false;
-        this.priority = "medium";
-        this.dueDate = "";
+        this.priority = "none";
+        this.dueDate = new Date().toISOString().slice(0, 10);
     }
 
     setDescription(description) {
@@ -25,5 +25,13 @@ export default class Task {
 
     setCompleted(completed) {
         this.completed = completed;
+    }
+
+    getDate() {
+        return this.dueDate
+    }
+
+    setDate(newDate) {
+        this.dueDate = newDate;
     }
 }

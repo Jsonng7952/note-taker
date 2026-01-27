@@ -2,7 +2,7 @@ export function bindProjectEvents({
     onCreate, onDelete, onEdit, onSave, 
     onNewTask, onAddTask, 
     onDeleteTask, onEditTask, onSaveTask,
-    onToggleTask }) {
+    onToggleTask, onTaskDueDateChange }) {
     
     const userInput = document.getElementById("userinput");
     const enterButton = document.getElementById("enter");
@@ -57,6 +57,10 @@ export function bindProjectEvents({
         onToggleTask(projectId, taskId, checked);
     }
 
+    function handleTaskDueDateChange(projectId, taskId, newDate) {
+        onTaskDueDateChange(projectId, taskId, newDate)
+    }
+
     userInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
             handleCreate();
@@ -96,19 +100,24 @@ export function bindProjectEvents({
     };
     
     projectList.addEventListener("change", (e) => {
-        if (!e.target.matches("[data-role='task-complete']")) return;
-
         const project = e.target.closest("[data-project-id]");
         const projectId = project?.dataset.projectId;
         const task = e.target.closest("[data-task-id]");
         const taskId = task?.dataset.taskId;
 
-        console.log(e.target.checked);
-
-        toggleTask(
-            projectId,
-            taskId,
-            e.target.checked
-        );
+        if (e.target.matches("[data-role='task-complete']")) {
+            toggleTask(
+                projectId,
+                taskId,
+                e.target.checked
+            );
+        }
+        if (e.target.matches("[data-role='task-date']")) {
+            handleTaskDueDateChange(
+                projectId, 
+                taskId, 
+                e.target.value
+            );
+        }
     });
 }

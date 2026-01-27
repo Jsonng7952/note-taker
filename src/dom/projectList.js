@@ -125,12 +125,18 @@ export function addTaskToProject(projectId, description, task) {
     taskCheckBox.dataset.role = "task-complete";
     taskCheckBox.classList.add("task-checkbox")
 
+    const taskDate = document.createElement("input");
+    taskDate.type = "date";
+    taskDate.value = task.getDate();
+    taskDate.dataset.role = "task-date";
+
     li.appendChild(taskCheckBox);
     li.appendChild(span);
     li.appendChild(input);
     li.appendChild(editButton);
     li.appendChild(saveButton);
     li.appendChild(deleteButton);
+    li.appendChild(taskDate);
 
     taskInput.before(li);
 

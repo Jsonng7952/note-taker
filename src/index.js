@@ -72,6 +72,15 @@ function handleToggleTask(projectId, taskId, checked) {
     toggleTask(projectId, taskId);
 }
 
+function handleTaskDueDateChange(projectId, taskId, newDate) {
+    const foundProject = projects.find(project => project.id === projectId);
+    const foundTask = foundProject.tasks.find(task => task.getId() === taskId);
+
+    foundTask.setDate(newDate);
+
+    console.log(foundProject);
+}
+
 bindProjectEvents({
     onCreate: handleCreateProject,
     onDelete: handleDeleteProject,
@@ -82,5 +91,6 @@ bindProjectEvents({
     onDeleteTask: handleDeleteTask,
     onEditTask: handleEditTask,
     onSaveTask: handleSaveTask,
-    onToggleTask: handleToggleTask
+    onToggleTask: handleToggleTask,
+    onTaskDueDateChange: handleTaskDueDateChange
 });
