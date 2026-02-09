@@ -2,7 +2,7 @@ export function bindProjectEvents({
     onCreate, onDelete, onEdit, onSave, 
     onNewTask, onAddTask, 
     onDeleteTask, onEditTask, onSaveTask,
-    onToggleTask, onTaskDueDateChange }) {
+    onToggleTask, onTaskDueDateChange, onTaskPriorityChange }) {
     
     const userInput = document.getElementById("userinput");
     const enterButton = document.getElementById("enter");
@@ -58,7 +58,11 @@ export function bindProjectEvents({
     }
 
     function handleTaskDueDateChange(projectId, taskId, newDate) {
-        onTaskDueDateChange(projectId, taskId, newDate)
+        onTaskDueDateChange(projectId, taskId, newDate);
+    }
+
+    function handleTaskPriorityChange(projectId, taskId, newPriority) {
+        onTaskPriorityChange(projectId, taskId, newPriority);
     }
 
     userInput.addEventListener("keypress", (e) => {
@@ -114,6 +118,13 @@ export function bindProjectEvents({
         }
         if (e.target.matches("[data-role='task-date']")) {
             handleTaskDueDateChange(
+                projectId, 
+                taskId, 
+                e.target.value
+            );
+        }
+        if (e.target.matches("[data-role='task-priority']")) {
+            handleTaskPriorityChange(
                 projectId, 
                 taskId, 
                 e.target.value

@@ -130,6 +130,28 @@ export function addTaskToProject(projectId, description, task) {
     taskDate.value = task.getDate();
     taskDate.dataset.role = "task-date";
 
+    const prioritySelect = document.createElement("select");
+    prioritySelect.name = "priority";
+    prioritySelect.dataset.role = "task-priority";
+
+    const priorityOptionNone = document.createElement("option");
+    priorityOptionNone.value = "none";
+    priorityOptionNone.textContent = "None";
+    const priorityOptionLow = document.createElement("option");
+    priorityOptionLow.value = "low";
+    priorityOptionLow.textContent = "Low";
+    const priorityOptionMedium = document.createElement("option");
+    priorityOptionMedium.value = "medium";
+    priorityOptionMedium.textContent = "Medium";
+    const priorityOptionHigh = document.createElement("option");
+    priorityOptionHigh.value = "high";
+    priorityOptionHigh.textContent = "High";
+
+    prioritySelect.appendChild(priorityOptionNone);
+    prioritySelect.appendChild(priorityOptionLow);
+    prioritySelect.appendChild(priorityOptionMedium);
+    prioritySelect.appendChild(priorityOptionHigh);
+
     li.appendChild(taskCheckBox);
     li.appendChild(span);
     li.appendChild(input);
@@ -137,6 +159,7 @@ export function addTaskToProject(projectId, description, task) {
     li.appendChild(saveButton);
     li.appendChild(deleteButton);
     li.appendChild(taskDate);
+    li.appendChild(prioritySelect);
 
     taskInput.before(li);
 

@@ -81,6 +81,14 @@ function handleTaskDueDateChange(projectId, taskId, newDate) {
     console.log(foundProject);
 }
 
+function handleTaskPriorityChange(projectId, taskId, newPriority) {
+    const foundProject = projects.find(project => project.id === projectId);
+    const foundTask = foundProject.tasks.find(task => task.getId() === taskId);
+
+    foundTask.setPriority(newPriority);
+    console.log(foundProject);
+}
+
 bindProjectEvents({
     onCreate: handleCreateProject,
     onDelete: handleDeleteProject,
@@ -92,5 +100,6 @@ bindProjectEvents({
     onEditTask: handleEditTask,
     onSaveTask: handleSaveTask,
     onToggleTask: handleToggleTask,
-    onTaskDueDateChange: handleTaskDueDateChange
+    onTaskDueDateChange: handleTaskDueDateChange,
+    onTaskPriorityChange: handleTaskPriorityChange
 });
