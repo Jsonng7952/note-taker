@@ -28,9 +28,9 @@ export const App = () => {
     console.log("Delete Project", projects);
   }
 
-  const handleSaveProject = (id, newName) => {
+  const handleSaveProject = (projectId, newName) => {
     const updatedProject = projects.map(project => {
-      if(project.id === id) {
+      if(project.id === projectId) {
         return {...project, name: newName};
       }
       return project;
@@ -38,6 +38,18 @@ export const App = () => {
     setProjects(updatedProject);
 
     console.log("Save Project", projects);
+  }
+
+  const handleCreateTask = (projectId, taskName, taskDescription) => {
+    const updatedProject = projects.map(project => {
+      if(project.id === projectId) {
+        const newTask = {id: crypto.randomUUID(), name: taskName, description: taskDescription};
+
+        return {...project, tasks: [...project.tasks, newTask]};
+      }
+      return project;
+    })
+    setProjects(updatedProject);
   }
 
   return (
@@ -49,7 +61,12 @@ export const App = () => {
       </form>
 
 
-      <ProjectList projects={projects} onDeleteProject={handleDeleteProject} onSaveProject={handleSaveProject}/>
+      <ProjectList 
+        projects={projects} 
+        onDeleteProject={handleDeleteProject} 
+        onSaveProject={handleSaveProject}
+        onCreateTask={handleCreateTask}
+      />
     </>
   );
 }
