@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ProjectList } from './components/ProjectList';
+import { Task } from './components/Task';
 
 export const App = () => {
 
@@ -50,6 +51,39 @@ export const App = () => {
       return project;
     })
     setProjects(updatedProject);
+
+    console.log("Create Task", projects);
+  }
+
+  const handleDeleteTask = (projectId, taskId) => {
+    const updatedProject = projects.map(project => {
+      if(project.id === projectId) {
+        const filteredTask = project.tasks.filter(task => task.id !== taskId);
+        return {...project, tasks: filteredTask};
+      }
+      return project;
+    })
+    setProjects(updatedProject);    
+
+    console.log("Delete Task", projects);    
+  }
+
+  const handleSaveTask = (projectId, taskId, taskName, taskDescription) => {
+    const updatedProject = projects.map(project => { 
+      if(project.id === projectId) { 
+        const updatedTask = project.tasks.map(task => {
+          if(task.id === taskId) { 
+            return {...task, name: taskName, description: taskDescription};
+          }
+          return task;
+        })
+        return {...project, tasks: updatedTask};
+      }
+      return project;
+    })
+    setProjects(updatedProject);
+
+    console.log("Save Task", projects);    
   }
 
   return (
@@ -66,6 +100,8 @@ export const App = () => {
         onDeleteProject={handleDeleteProject} 
         onSaveProject={handleSaveProject}
         onCreateTask={handleCreateTask}
+        onDeleteTask={handleDeleteTask}
+        onSaveTask={handleSaveTask}
       />
     </>
   );

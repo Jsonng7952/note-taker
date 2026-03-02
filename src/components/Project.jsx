@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TaskList } from "./TaskList";
 
-export const Project = ({ id, name, tasks, onDeleteProject, onSaveProject, onCreateTask }) => {
+export const Project = ({ id, name, tasks, onDelete, onSave, onCreateTask, onDeleteTask, onSaveTask }) => {
 
   const [view, setView] = useState("default");
   const [newName, setNewName] = useState(name);
@@ -18,7 +18,7 @@ export const Project = ({ id, name, tasks, onDeleteProject, onSaveProject, onCre
   const handleSaveProject = (event) => {
     event.preventDefault();
 
-    onSaveProject(id, newName);
+    onSave(id, newName);
     setView("default");
   }
 
@@ -39,6 +39,14 @@ export const Project = ({ id, name, tasks, onDeleteProject, onSaveProject, onCre
       [name]: value
     }));
   }
+  
+  const handleDeleteTask = (taskId) => {
+    onDeleteTask(id, taskId);
+  }
+
+  const handleSaveTask = (taskId, taskName, taskDescription) => {
+    onSaveTask(id, taskId, taskName, taskDescription);
+  }
 
   const editView = (
     <li>
@@ -48,7 +56,11 @@ export const Project = ({ id, name, tasks, onDeleteProject, onSaveProject, onCre
         <button type="submit">Save</button>
       </form>
 
-      <TaskList tasks={tasks}/>
+      <TaskList 
+        tasks={tasks} 
+        onDeleteTask={handleDeleteTask} 
+        onSaveTask={handleSaveTask}
+      />
     </li>
   );
 
@@ -56,10 +68,14 @@ export const Project = ({ id, name, tasks, onDeleteProject, onSaveProject, onCre
     <li>
       <h2>{name}</h2>
       <button onClick={() => setView("edit")}>Edit</button>
-      <button onClick={() => onDeleteProject(id)}>Delete</button>
+      <button onClick={() => onDelete(id)}>Delete</button>
       <button onClick={() => setView("newtask")}>New Task</button>
 
-      <TaskList tasks={tasks}/>
+      <TaskList 
+        tasks={tasks} 
+        onDeleteTask={handleDeleteTask} 
+        onSaveTask={handleSaveTask}
+      />
     </li>
   );
   
@@ -69,7 +85,6 @@ export const Project = ({ id, name, tasks, onDeleteProject, onSaveProject, onCre
       <form onSubmit={handleCreateTask}>
         <input type="text" name="name" onChange={handleTaskInputChange} placeholder="Task Title"/>
         <input type="text" name="description" onChange={handleTaskInputChange} placeholder="Description"/>
-
         <button type="button" onClick={() => setView("default")}>Cancel</button>
         <button type="submit">Save Task</button>
       </form>

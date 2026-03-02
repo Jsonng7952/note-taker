@@ -1,6 +1,6 @@
 import { Task } from "./Task"
 
-export const TaskList = ({tasks}) => {
+export const TaskList = ({tasks, onDeleteTask, onSaveTask}) => {
 
   return (
     <ul>
@@ -11,6 +11,8 @@ export const TaskList = ({tasks}) => {
             id={task.id}
             name={task.name}
             description={task.description}
+            onDelete={onDeleteTask} 
+            onSave={onSaveTask}
           />
         )
       })}

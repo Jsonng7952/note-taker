@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Project } from "./Project";
 
-export const ProjectList = ({ projects, onDeleteProject, onSaveProject, onCreateTask }) => {
+export const ProjectList = ({ projects, onDeleteProject, onSaveProject, onCreateTask, onDeleteTask, onSaveTask }) => {
 
   return(
     <ul>
@@ -13,9 +13,11 @@ export const ProjectList = ({ projects, onDeleteProject, onSaveProject, onCreate
               id={project.id}
               name={project.name}
               tasks={project.tasks}
-              onDeleteProject={onDeleteProject}
-              onSaveProject={onSaveProject}
+              onDelete={onDeleteProject}
+              onSave={onSaveProject}
               onCreateTask={onCreateTask}
+              onDeleteTask={onDeleteTask}
+              onSaveTask={onSaveTask}
             />
           )
         })
