@@ -28,6 +28,12 @@ export const Project = ({ id, name, tasks, onDelete, onSave, onCreateTask, onDel
     const {name, description} = taskForm;
 
     onCreateTask(id, name, description);
+
+    setTaskForm({
+      name: "",
+      description: ""      
+    })
+
     setView("default");
   }
 
