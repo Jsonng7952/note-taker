@@ -8,7 +8,10 @@ export const Project = ({ id, name, tasks, onDelete, onSave, onCreateTask, onDel
 
   const [taskForm, setTaskForm] = useState({
     name: "",
-    description: ""
+    description: "",
+    completed: undefined,
+    priority: "",
+    dueDate: ""
   });
 
   const handleProjectInputChange = (event) => {
@@ -25,13 +28,16 @@ export const Project = ({ id, name, tasks, onDelete, onSave, onCreateTask, onDel
   const handleCreateTask = (event) => {
     event.preventDefault();  
 
-    const {name, description} = taskForm;
+    const {name, description, completed, priority, dueDate} = taskForm;
 
-    onCreateTask(id, name, description);
+    onCreateTask(id, name, description, completed, priority, dueDate);
 
     setTaskForm({
       name: "",
-      description: ""      
+      description: "",
+      completed: false,
+      priority: "",
+      dueDate: ""
     })
 
     setView("default");
@@ -50,8 +56,8 @@ export const Project = ({ id, name, tasks, onDelete, onSave, onCreateTask, onDel
     onDeleteTask(id, taskId);
   }
 
-  const handleSaveTask = (taskId, taskName, taskDescription) => {
-    onSaveTask(id, taskId, taskName, taskDescription);
+  const handleSaveTask = (taskId, taskName, taskDescription, taskCompleted, taskPriority, taskDueDate) => {
+    onSaveTask(id, taskId, taskName, taskDescription, taskCompleted, taskPriority, taskDueDate);
   }
 
   const editView = (
@@ -91,6 +97,15 @@ export const Project = ({ id, name, tasks, onDelete, onSave, onCreateTask, onDel
       <form onSubmit={handleCreateTask}>
         <input type="text" name="name" onChange={handleTaskInputChange} placeholder="Task Title"/>
         <input type="text" name="description" onChange={handleTaskInputChange} placeholder="Description"/>
+
+        <input type="date" name="dueDate" onChange={handleTaskInputChange}/>
+        <select name="priority" onChange={handleTaskInputChange}>
+          <option value={"None"}>None</option>
+          <option value={"Low"}>Low</option>
+          <option value={"Medium"}>Medium</option>
+          <option value={"High"}>High</option>
+        </select>
+
         <button type="button" onClick={() => setView("default")}>Cancel</button>
         <button type="submit">Save Task</button>
       </form>

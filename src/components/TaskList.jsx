@@ -11,6 +11,9 @@ export const TaskList = ({tasks, onDeleteTask, onSaveTask}) => {
             id={task.id}
             name={task.name}
             description={task.description}
+            completed={task.completed}
+            priority={task.priority}
+            dueDate={task.dueDate}
             onDelete={onDeleteTask} 
             onSave={onSaveTask}
           />

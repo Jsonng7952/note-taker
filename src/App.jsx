@@ -41,11 +41,17 @@ export const App = () => {
     console.log("Save Project", projects);
   }
 
-  const handleCreateTask = (projectId, taskName, taskDescription) => {
+  const handleCreateTask = (projectId, taskName, taskDescription, taskCompleted, taskPriority, taskDueDate) => {
     const updatedProject = projects.map(project => {
       if(project.id === projectId) {
-        const newTask = {id: crypto.randomUUID(), name: taskName, description: taskDescription};
-
+        const newTask = {
+          id: crypto.randomUUID(), 
+          name: taskName, 
+          description: taskDescription,
+          completed: taskCompleted,
+          priority: taskPriority,
+          dueDate: taskDueDate
+        };
         return {...project, tasks: [...project.tasks, newTask]};
       }
       return project;
@@ -68,12 +74,18 @@ export const App = () => {
     console.log("Delete Task", projects);    
   }
 
-  const handleSaveTask = (projectId, taskId, taskName, taskDescription) => {
+  const handleSaveTask = (projectId, taskId, taskName, taskDescription, taskCompleted, taskPriority, taskDueDate) => {
     const updatedProject = projects.map(project => { 
       if(project.id === projectId) { 
         const updatedTask = project.tasks.map(task => {
           if(task.id === taskId) { 
-            return {...task, name: taskName, description: taskDescription};
+            return {...task, 
+              name: taskName, 
+              description: taskDescription, 
+              completed: taskCompleted,
+              priority: taskPriority,
+              dueDate: taskDueDate              
+            };
           }
           return task;
         })
